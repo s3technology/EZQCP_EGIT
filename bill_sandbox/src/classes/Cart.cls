@@ -30,6 +30,7 @@ public with sharing class Cart {
           	}else{
           		
           		String ass1='temp ';
+            	system.debug(ass1);
             	List<LocationAssesmentRelationship__c> orders= [Select Assessment__c  from LocationAssesmentRelationship__c where location__c IN (Select Id From Location__c where Account__c =:acid  AND CLIA__c =: loc_clia) AND Status__c = 'Active'];
                 for(LocationAssesmentRelationship__c order1: orders)
             	{ 
@@ -41,6 +42,7 @@ public with sharing class Cart {
                	
            	}
             str2=str2+item1+';';
+            
          }
     }
     public Cart(ApexPages.StandardController controller) {
