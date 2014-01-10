@@ -1,11 +1,12 @@
 public with sharing class assesmentIfram {
     
     public ID     accId   {get;set;}
-    public String LocName {get;set;} 
+    public String LocName {get;set;}  
     public String Address {get;set;} 
     public String city    {get;set;}
     public String state   {get;set;}   
     public String CLIA    {get;set;} 
+    public String CLIA2    {get;set;} 
   	//public String sUrl  {get;set;} 
   	//public List<String> deploy_uri = new List<String>();
    	//public List<String> Survey_id = new List<String>();
