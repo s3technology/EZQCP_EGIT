@@ -1,0 +1,173 @@
+<apex:page standardController="Account" extensions="EditAccount" showHeader="false" id="editacc" cache="false">
+<title>Edit Account - EZ-QCP</title>
+  <style>
+        .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a:link, a:visited, a:active{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+
+    hr{
+        margin-left:200px;      
+    }
+    .footer{
+         font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+         margin-left:200px;
+         padding-top: 35px;
+         padding-bottom: 40px;
+         color:hsl(0, 0%, 45%);
+         margin-left:280px;
+    }
+    #pbsDiv{
+        background-color:rgb(138,158,190);
+        background-image:url('/img/alohaSkin/opacity75.png');
+        Padding:4px 16px;
+        border-width: 1px 0px 0px;
+        color: rgb(0, 0, 0);
+        border-top: 1px solid rgb(255, 255, 255);
+        font-size: 1.2em;
+        margin-top:10px;
+        font-family: Arial,Helvetica,sans-serif;
+    } 
+  </style>
+  
+    <apex:image styleClass="images" value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!Account.Id}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!Account.Id}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.id}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>  <br/><br/><br/><br/>
+
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs1:facility_name"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs1:email"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs1:pr_phone"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs1:title"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs1:cntName"]');
+		 
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bline1"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:sline1"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bcity"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:scity"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bstate"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:sstate"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bzip"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:szip"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bstate"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:sstate"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:bcountry"]');
+		 jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editacc:form:pb:pbs2:scountry"]');
+		 
+		 	      
+      
+      }); 
+</script>
+
+
+<apex:form style="margin-left:200px;margin-right:200px;" id="form">
+        <apex:pageBlock mode="edit" id="pb">
+            <apex:pageBlockButtons id="pbb">
+                <apex:commandButton value="Save" action="{!saveAcc}" id="save"/>
+                <apex:commandButton value="Cancel" onclick="parent.location='/index/index?id={!Account.Id}'" reRender="false" id="cancel"/>
+            </apex:pageBlockButtons>
+            <apex:pagemessages />
+            <apex:pageBlockSection title="Account Information" columns="2" id="pbs1" >
+               
+               <apex:inputText value="{!name}"  label="Facility Name" id="facility_name" required="true"/>
+               <apex:inputText value="{!phone}" label="Primary Phone" id="pr_phone" required="true"/> 
+               <apex:inputText value="{!contactName}"  label="Contact Name" id="cntName" required="true"/>
+               <apex:inputText value="{!extension}"  Label="Extension" id="extension" />
+               <apex:inputText value="{!Title}"  label="Title" id="title" required="true"/>
+               <apex:inputText value="{!cell_phone}" Label="Cell Phone" id="cell_phone"/>
+               <apex:inputText value="{!email}" label="Email" id="email" required="true"/>
+               <apex:inputText value="{!fax}"   label="Fax" id="fax"/>
+              
+                                         
+           </apex:pageBlockSection> 
+           <div id="pbsDiv"> <h3 style="font-size:91%"> Account Information  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mailing Address Details</h3></div>           
+           <apex:pageblockSection columns="2" id="pbs2">
+               
+               <apex:inputText value="{!billingStreet}"  label="Address Line 1" id="bline1" required="true"/>
+               <apex:inputText value="{!shippingStreet}" Label="Address Line 1" id="sline1" required="true"/> 
+
+               <apex:inputText value="{!billingline2}"   label="Address Line 2" id="bline2"/>
+               <apex:inputText value="{!shippingline2}"  Label="Address Line 2" id="sline2"/>
+               
+               <apex:inputText value="{!billingCity}"    Label="City" id="bcity" required="true"/>
+               <apex:inputText value="{!shippingCity}"   Label="City" id="scity" required="true"/>
+
+               <apex:inputText value="{!BillingState}"   Label="State/Province" id="bstate" required="true"/>
+               <apex:inputText value="{!shippingState}"  Label="State/Province" id="sstate" required="true"/> 
+               
+               <apex:inputText value="{!BillingPostalCode}"    label="Zip/Postal Code" id="bzip" required="true"/>
+               <apex:inputText value="{!shippingPostalCode}"   Label="Zip/Postal Code" id="szip" required="true"/> 
+
+               <apex:inputText value="{!billingCountry}"  Label="Country" id="bcountry" required="true"/>
+               <apex:inputText value="{!shippingCountry}" Label="Country" id="scountry" required="true"/> 
+           
+           </apex:pageblockSection>
+        </apex:pageBlock>
+    </apex:form> 
+    <hr style="margin-top:20px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+
+</apex:page>

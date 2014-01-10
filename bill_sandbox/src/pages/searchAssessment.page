@@ -1,0 +1,197 @@
+<apex:page standardController="Assessment__c" extensions="SearchController" cache="false" showHeader="false" action="{!assessmentSearch}">
+<title>Order EZ-QCP Assessments for {!$CurrentPage.parameters.name} {!$CurrentPage.parameters.CLIA} - EZ-QCP</title>
+<style>
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    .pageDescription {
+    margin-left: 30px;
+}
+	
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+</style>
+   <apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+                <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.pid}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.pid}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                 
+                 <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                 
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+var msg="{!msg}";
+
+if(msg=="1")
+{
+    alert('This assessment has already been added to your shopping cart');
+}
+ 
+</script>
+
+
+<br/><br/>
+<script>
+function checkAll(cb){
+   var inputElem = document.getElementsByTagName("input");
+   for(var i=0;i<inputElem.length;i++){
+       if(inputElem[i].id.indexOf("selectLine1")!=-1)
+           inputElem[i].checked = cb.checked;
+   }
+}
+
+
+</script>
+
+<apex:form >
+<apex:outputText value="{!msg}"/>
+</apex:form>
+
+<apex:form style="margin-left:200px;margin-right:200px ">
+    <apex:sectionHeader subtitle="Order EZ-QCP Assessments for {!$CurrentPage.parameters.name} {!$CurrentPage.parameters.CLIA}" />
+    <apex:pageblock >
+        <apex:pageBlockSection title="Search Assessment" columns="1" collapsible="false" rendered="false" >
+            <apex:inputField value="{!Assessment__c.Device__c}" Label="Device" onchange="doSearch();"/> 
+            <apex:inputField value="{!Assessment__c.Manufacturer__c}" Label="Manufacturer" onchange="doSearch();"/>
+            <apex:inputField value="{!Assessment__c.Test_Name__c}" Label="Test Name" onchange="doSearch();"/><br/>                                              
+            <apex:actionFunction name="doSearch" action="{!assessmentSearch}" reRender="output" status="searching"/>
+            <apex:commandButton value="Search" action="{!assessmentSearch}"/>    
+        </apex:pageBlockSection>    
+        <apex:pagemessage strength="2" title="Error!!" severity="error" detail="Please select an assessment" rendered="{!errormsg}"/>
+        <apex:actionStatus id="searching" startText="Searching...." startStyle="Color:red"/>
+       <!-- <apex:pageblocksection columns="1" title="Search results" id="output" >--><!--rendered="{!NOT(ISNULL(results))}" id="output">-->
+    <apex:pageblocksection columns="1" title=" "  id="output" >
+            <apex:outputpanel id="assessmentlist">
+                <apex:pageBlockTable value="{!results}" var="assessments">
+                    <apex:column >
+                  <!--  <apex:facet name="header"> 
+                             <apex:inputCheckbox onclick="checkAll(this)"/>
+                        </apex:facet> -->
+                        <apex:inputCheckbox value="{!assessments.selected}" id="selectLine1"/>      
+                    </apex:column> 
+                     
+                    <apex:column headervalue="Manufacturer">
+                        <apex:outputtext value="{!assessments.ass.Manufacturer__c}"/>
+                    </apex:column>
+                    
+                    <apex:column headervalue="Device">
+                  		<apex:outputtext value="{!assessments.ass.Device__c}" />
+                    </apex:column>
+                                    
+                   <apex:column headervalue="Price">
+                        <apex:outputtext value="${!assessments.ass.Price__c}"/>
+                    </apex:column>
+            
+                </apex:pageBlockTable>  
+           </apex:outputpanel>
+        </apex:pageblocksection>
+        <apex:commandButton value="Add to Cart" action="{!processSelected}"/>
+        <apex:commandbutton value="Cancel" action="{!Cancel}"/>        
+    </apex:pageblock>
+    
+</apex:form>
+<hr style="margin-top:50px;margin-left:200px"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+<script>
+
+window.onload = 
+
+function checkCookie(){
+        var username = getCookie("apex__username");   
+         
+      // alert(username);     
+        if (username!=null && username!=""){
+            checkTypeCookie();
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+
+    function checkTypeCookie(){
+        var customerType = getCookie("apex__customertype");
+        if (customerType == "User"){
+            
+        }
+        else {
+            var elements= document.getElementsByClassName('hide');
+            for(var i=0;i<elements.length;i++){
+                elements[i].style.display = 'inline-block';
+        }
+      }
+    }
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    } 
+  function deleteCookie(name){
+         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+  }
+  </script>
+</apex:page>

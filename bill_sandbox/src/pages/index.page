@@ -1,0 +1,410 @@
+<apex:page standardController="Account" showHeader="false" extensions="SiteController,DeleteThisContact" cache="false" id="page">
+<title>Account Central - EZ-QCP</title>
+<style>
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+
+    .configLinks{display:none;}
+    .ptBreadcrumb{display:none;} 
+    //td.dataCol.col02 a{display:none;}
+    .images{margin-left:200px;}
+     hr{margin-left:200px;}
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    #super{
+        margin-left:200px;
+        margin-right:200px;
+    }
+    .action{
+        text-decoration:none;
+        color:blue !important;
+    }
+    .action:hover{
+        color:red !important;
+    }
+</style>
+
+<apex:image styleClass="images" value="{!$Resource.logoEZQCP    }"/>
+
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!Account.Id}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!Account.Id}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                 <li class="module">
+                <div class="hide" id="cart">
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.id}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                <li class="module"  >
+                <div>
+                   <!--    <a href= "javascript: deleteCookie('{!Account.User_Name__c}');" > -->                                                                                                 
+                    <a href="/index" > 
+                        <span>Logout</span>
+                    </a>
+                </div>
+                </li>
+               <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/>
+<apex:messages />
+<apex:pageMessages ></apex:pageMessages>
+
+<div id="super">
+<apex:pageBlock title="Account Details" id="AccountDetailBlock" mode="mainDetail">
+    <apex:pageblockButtons location="top">
+        <apex:form >
+            <apex:commandButton value="Edit" onclick="parent.location='/index/editAccount?id={!Account.Id}'" rendered="{!showAction}" reRender="false"/>
+        </apex:form>
+    </apex:pageblockButtons>
+    <apex:pageBlockSection columns="2">
+       <apex:outputText label="Facility Name" value="{!Account.name}"/>
+       <apex:outputText label="Primary Phone" value="{!Account.phone}"/>        
+       <apex:outputText label="Contact Name" value="{!Account.Contact_Name__c}"/>
+       <apex:outputText label="Extension" value="{!Account.Extension__c}"/>   
+       <apex:outputText label="Title" value="{!Account.Title__c}"/> 
+            
+       <apex:outputText label="Cell Phone" value="{!Account.Cell_Phone__c}"/> 
+       <apex:outputText value="{!Account.User_Name__c}"/>  
+        <apex:outputText label="Fax" value="{!Account.fax}"/>  
+          <apex:outputText label="" value=""/>          
+       <apex:outputText label="Email" value="{!Account.Email__c}"/>             
+    </apex:pageBlockSection>   
+    <apex:pageBlocksection title="Address Details">
+       
+       <apex:outputText label="Billing Address" escape="false">
+            {!bline1} <br/>
+            {!bline2} <apex:outputText rendered="{!bbr}" ><br/></apex:outputText>
+            {!Account.BillingCity}, {!Account.BillingState} {!Account.BillingPostalCode} <br/>
+            {!Account.BillingCountry}
+       </apex:outputText>
+      
+       <apex:outputText label="Mailing Address">
+            {!sline1} <br/>
+            {!sline2} <apex:outputText rendered="{!sbr}" ><br/></apex:outputText>
+            {!Account.shippingCity}, {!Account.shippingState} {!Account.shippingPostalCode} <br/>
+            {!Account.shippingCountry}
+       </apex:outputText>
+       
+       <!-- 
+       <apex:outputText label="Address" value="{!Account.ShippingStreet}"/>
+       
+       <apex:outputText label="City" value="{!Account.BillingCity}"/>
+       <apex:outputText label="City" value="{!Account.ShippingCity}"/>
+       
+       <apex:outputText label="Zip/Postal Code" value="{!Account.BillingPostalCode}"/>
+       <apex:outputText label="Zip/Postal Code" value="{!Account.ShippingPostalCode}"/>
+       
+       <apex:outputText label="State/Province" value="{!Account.BillingState}" />
+       <apex:outputText label="State/Province" value="{!Account.ShippingState}" />
+       
+       <apex:outputText label="Country" value="{!Account.BillingCountry}"/>
+       <apex:outputText label="Country" value="{!Account.ShippingCountry}"/>
+       -->
+    </apex:pageBlockSection>
+    <!-- <apex:pageBlockSection title="System Information">
+       <apex:outputText label="Created by" value="{!Account.CreatedBy.Name}"/>
+       <apex:outputText Label="Last Modified by"  value="{!Account.LastModifiedBy.Name}"/>
+    </apex:pageBlockSection>    -->
+</apex:pageBlock>
+
+
+
+<apex:form id="locationform" rendered="{!showAction}" >
+    <apex:pageBlock title="IQCP Location" >
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton value="Add IQCP Location / Unique Identifier" action="{!createLocation}" rendered="{!showAction}"/>
+        </apex:pageBlockButtons>
+        <apex:actionStatus id="deletinglocation" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+        <apex:pageBlockTable value="{!loc}" var="a" rendered="{!showL}">
+            <apex:column headerValue="Action" width="70px" rendered="{!showAction}">
+                <apex:outputLink id="edit_loc" value="/apex/editLocation?id={!a.id}"   styleClass="action"  > Edit </apex:outputLink> |               
+                <a href="javascript:if (window.confirm('Are you sure you want to delete this IQCP Location? All EZ-QCP Assessments related to this location will also become Inactive.'))  DeleteLocation('{!a.id}');void(0);" class="action">Del</a>       
+            </apex:column>
+            <apex:column headerValue="IQCP Location / Unique Identifier"  >
+                <apex:outputLink value="/apex/LocationDetail?id={!a.id}" id="LocationName">{!a.Name}</apex:outputLink>
+            </apex:column> 
+         <script>
+                  
+         </script>
+        
+            <apex:column headerValue="Department"> {!a.Location_Type__c} <span style="display:none{!a.Other__c};">({!a.Other__c})</span> </apex:column> 
+            <apex:column headerValue="CLIA Number"> {!a.CLIA__c} </apex:column> 
+            
+        <!--    <apex:column headerValue="City"> {!a.City__c} </apex:column> -->
+            
+        <!--        <apex:column headerValue="Order count" value="{!a.Order_Count__c}"/> -->  
+        
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!NOT(showL)}">No records to display</apex:outputText>
+    </apex:PageBlock>
+    
+ <!--  <apex:actionFunction action="{!deleteLocation}" name="DeleteLocation" reRender="locationform" status="deletinglocation">
+    
+        <apex:param name="locationid" value="" assignTo="{!LocationId}"/>
+    </apex:actionFunction> -->
+    
+     <apex:actionFunction action="{!deleteLocation}" name="DeleteLocation" reRender="locationform" status="deletinglocation">
+       <apex:param name="locationid" value="" assignTo="{!LocationId}"/>
+        </apex:actionFunction>
+</apex:form>
+
+
+
+
+
+
+
+ 
+<apex:form id="Orderform">
+   <apex:pageBlock title="EZ-QCP Assessments">
+      <apex:pageBlockButtons location="top">
+          <script>
+              function chkLoc()
+              {
+                 var a= '{!showL}';     
+                 if(a=='true')
+                
+                     return  '/index/locationsList?pid={!Account.id}';
+                 else   
+                 {    
+                     alert('Please click the ‘Add IQCP Location’ button and input your IQCP location before you add a new EZ-QCP Assessment');
+                    return '';
+                 }
+              }
+          </script> 
+        <apex:commandButton value="Add EZ-QCP Assessments" onclick="parent.location=chkLoc();" rendered="{!showAction}" reRender="false"/>  
+        <!-- <apex:commandButton value="Add EZ-QCP Assessments" onclick="parent.location='/index/locationsList?pid={!Account.id}'" reRender="false"/>  -->
+       </apex:pageBlockButtons>
+       <apex:actionStatus id="deactivating" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+       <apex:pageBlockTable id="assessmentTable" value="{!order}" var="o">
+           <apex:column headerValue="Action" width="70px">
+           <apex:outputLink value="/index/assessmentDetail?id={!o.Assessment__c}&pid={!o.Location__c}&larid={!o.Id}" styleClass="action">Open  </apex:outputLink> |
+               <apex:outputLink value="javascript:if (window.confirm('Are you sure?')) deactivateOrder('{!o.id}');void(0);" styleClass="action"  rendered="{!showAction}">    Del       </apex:outputLink>
+           </apex:column>
+           <apex:column headerValue="IQCP Location / Unique Identifier" style="min-width:100px">
+                <apex:outputLink value="/index/locationDetail?id={!o.Location__c}">{!o.Location__r.Name}</apex:outputLink>  
+           </apex:column>  
+           
+           <apex:column headerValue="Department" value="{!o.Location__r.Location_Type__c}"/>
+           <apex:column headerValue="Manufacturer" value="{!o.Assessment__r.Manufacturer__c}"/>
+           <apex:column headerValue="Device" value="{!o.Assessment__r.Device__c}"/>
+           
+       	   <!-- <apex:column headerValue="Analyte" value="{!o.Assessment__r.Analyte__c}"/> -->
+          <!--  <apex:column headerValue="Test Category" value="{!o.Assessment__r.Test_Name__c}"/> -->
+       </apex:pageBlockTable>
+   </apex:pageBlock>
+   <apex:actionFunction action="{!deactivateOrder}" name="deactivateOrder" reRender="Orderform" status="deactivating">
+       <apex:param name="orderid" value="" assignTo="{!orderId}"/>
+   </apex:actionFunction> 
+</apex:form>
+<apex:form id="contactform" rendered="{!showAction}">
+    <apex:pageBlock title="Users">         
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton id="btn_newCon" action="{!goToContact}" value="Add User" rendered="{!showAction}"/>
+        </apex:pageBlockButtons>             
+        <apex:actionStatus id="deletingcontact" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+        <apex:pageBlockTable value="{!cont}" var="b" rendered="{!showC}">
+            <apex:column headerValue="Action" width="60px" rendered="{!showAction}">
+                <apex:outputLink id="edit_cont" value="/index/editContact?id={!b.id}&pid={!$CurrentPage.parameters.id}" styleClass="action"> Edit </apex:outputLink> | &nbsp;
+                <apex:commandLink onclick="javascript:if (window.confirm('Are you sure?')) delThisContact('{!b.Id}');" status="deletingcontact" value="Del" reRender="false" styleClass="action"/> 
+            </apex:column>
+            <apex:column headerValue="Name">
+                <apex:outputLink value="/apex/contact_detail?id={!b.Id}&pid={!Account.Id}" id="contactLink">{!b.Name}</apex:outputLink>
+            </apex:column>
+            <apex:column headerValue="Title">{!b.Title} </apex:column>    
+            <apex:column headerValue="User Type">{!b.Type__c} </apex:column>                   
+            <apex:column headerValue="Email"> {!b.Email}</apex:column>                   
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!NOT(showC)}">No records to display</apex:outputText>
+    </apex:pageBlock>
+    <apex:actionFunction action="{!deleteContact}" name="DeleteContact" reRender="contactform" status="deletingcontact">
+        <apex:param name="contactid" value="" assignTo="{!contactId}"/>
+    </apex:actionFunction>
+</apex:form>
+  
+
+
+
+
+ 
+
+
+
+<apex:form id="contactform2" rendered="{!NOT(showAction)}">
+   
+    <apex:pageBlock title="Users">         
+        
+        <apex:pageBlockTable value="{!un}" var="u">
+ 	    
+ 	    	<apex:column headerValue="Name">
+    	    	<apex:outputLink value="/apex/contact_detail?id={!u.Id}&pid={!Account.Id}" id="contactLink2">{!u.Name}</apex:outputLink>
+        	</apex:column>
+        	       
+        	<apex:column headerValue="Type">{!u.Type__c} </apex:column>                   
+        	<apex:column headerValue="Email"> {!u.Email}</apex:column>                   
+    
+    	</apex:pageBlockTable>
+
+    </apex:pageBlock>
+
+</apex:form>
+
+<!--
+<apex:form id="noteform" >
+    <apex:pageBlock title="Notes ">
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton id="btn_newNote" value="New Note" action="{!goToNote}" styleClass="hide"/>
+        </apex:pageBlockButtons>
+        <apex:actionStatus id="deleting" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+        <apex:pageBlockTable value="{!n_att}" var="c" rendered="{!showN}">
+            <apex:column headerValue="Action" width="60px">
+                <apex:outputLink value="/apex/noteEdit?id={!c.id}" style="color:blue" styleClass="hide"> Edit </apex:outputLink> |
+                <a href="javascript:if (window.confirm('Are you sure?')) DeleteNote('{!c.Id}');" style="color:blue" class="hide">Del</a> 
+            </apex:column>    
+            <apex:column headerValue="Title">
+                <apex:outputLink value="/apex/noteDetail?id={!c.Id}">{!c.Title}</apex:outputLink>
+            </apex:column>
+            <apex:column headerValue="Body"> {!c.Body} </apex:column>
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!NOT(showN)}">No records to display</apex:outputText>
+    </apex:pageBlock>
+    <apex:actionFunction action="{!deleteNote}" name="DeleteNote" reRender="noteform" status="deleting">
+        <apex:param name="noteid" value="" assignTo="{!NoteId}"/>
+    </apex:actionFunction>
+</apex:form>
+<apex:form id="attachmentform">
+    <apex:pageBlock title="Attachments">
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton id="new_Attach" value="Attach file" action="{!goToAttachment}" styleClass="hide"/>
+        </apex:pageBlockButtons>
+        <apex:actionStatus id="deleting2" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+        <apex:pageBlockTable value="{!att}" var="n" rendered="{!showA}">
+            <apex:column headerValue="Action" width="130px" >
+                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, n.Id)}" style="color:blue" target="_blank"> Download </apex:outputLink> | 
+                <apex:outputLink value="/apex/editAttachment?id={!n.Id}" style="color:blue" styleClass="hide">Edit </apex:outputLink> | 
+                <a href="javascript:if (window.confirm('Are you sure?')) DeleteAttachment('{!n.Id}');" style="color:blue" class="hide">Del</a>       
+            </apex:column>
+            <apex:column headerValue="Title">
+                <apex:outputLink value="/apex/attachmentDetail?id={!n.id}" id="attachmentName">{!n.Name}</apex:outputLink>
+            </apex:column> 
+            <apex:column headerValue="Description"> {!n.Description} </apex:column>    
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!NOT(showA)}">No records to display</apex:outputText>
+    </apex:pageBlock>
+    <apex:actionFunction action="{!deleteAttachment}" name="DeleteAttachment" reRender="attachmentform" status="deleting2">
+        <apex:param name="attachmentid" value="" assignTo="{!AttachmentId}"/>
+    </apex:actionFunction>
+</apex:form>--> 
+</div>
+<script>
+    window.onload = function checkCookie(){
+        var username = getCookie("apex__username");   
+        //alert(username);      
+        if (username!=null && username!=""){
+        //alert('aa gaya');
+            checkTypeCookie();
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+
+    function checkTypeCookie(){
+        var customerType = getCookie("apex__customertype");
+        if (customerType == "User"){
+          //  alert('customer');
+            var elements= document.getElementsByClassName('hide');
+            for(var i=0;i<elements.length;i++){
+                elements[i].style.display = 'none';
+            }
+        }
+        else {
+     //       alert('admin');
+            var elements= document.getElementsByClassName('hide');
+            for(var i=0;i<elements.length;i++){
+                elements[i].style.display = 'inline-block';
+            }
+      }
+   }
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    } 
+             
+  function deleteCookie(name) {
+  //  var cookie_date = new Date ( );
+   // cookie_date.setTime ( cookie_date.getTime() - 1 );
+   // document.cookie = name + "=; expires=" + cookie_date.toGMTString();
+  
+     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+  }
+  
+  function delThisContact(contactId) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.DeleteThisContact.delContact}',
+            contactId, 
+            function(result, event){
+                if (event.status) {
+                    location.reload(true);
+                }
+            }, 
+            {escape: true}
+        );
+    }
+  </script>
+<hr style="margin-top:20px"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+</apex:page>

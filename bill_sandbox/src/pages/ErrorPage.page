@@ -1,0 +1,36 @@
+<apex:page showHeader="false">
+<style>
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    hr{margin-left:200px;}
+</style>
+
+   <apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+
+<hr/>
+<div id="first" style="margin-left:300px;"><b>Something went wrong. Please go back and try again.</b>
+<!-- 2) To login Click on the Link Below
+<a href="http://carepointsolutions.force.com/index">http://carepointsolutions.force.com/index</a>
+
+-->
+</div>
+<div id="sec" style="display:none;margin-left:300px;">
+    <b>SomeThing Going Wrong, try again</b>
+</div>
+<hr style="margin-top:350px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved.
+</div>
+<script>    
+    if('{!$CurrentPage.parameters.r}'==1){
+        document.getElementById('sec').style.display = 'block';
+        document.getElementById('first').style.display = 'none';
+    }
+</script>
+</apex:page>

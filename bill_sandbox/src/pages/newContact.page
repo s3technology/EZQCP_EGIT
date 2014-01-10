@@ -1,0 +1,175 @@
+<apex:page standardController="Contact" extensions="newContact" showHeader="false" cache="false" id="con">
+<style>
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+        .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+</style>
+
+     <apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+<!-- 
+<apex:sectionHeader title="New Contact" subtitle="Contact Edit" description="Contacts not associated with accounts are private and cannot be viewed by other users or included in reports."  />
+-->
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.pid}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.pid}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                 <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.pid}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/>
+
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="con:form:pb:pbs:contact_name"]');
+     
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="con:form:pb:pbs:pr_ph"]');
+     
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="con:form:pb:pbs:title"]');
+     
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="con:form:pb:pbs:email"]');
+     
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('select[name="con:form:pb:pbs:typ_user"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="con:form:pb:pbs:username"]');
+      });
+      
+</script>
+
+<apex:form style="margin-left:200px;margin-right:200px;" id="form">
+    <apex:pageBlock title="Add a New User" mode="edit" id="pb"> 
+    <apex:messages title="Error! " style="color:#CC0000;"/>           
+        <apex:pageBlockButtons id="pbb">
+            <apex:commandButton action="{!save}" value="Save" id="save"/>
+            <apex:commandButton value="Cancel" onclick="parent.location = '/index/index?id={!$CurrentPage.parameters.pid}'" reRender="false" id="cancel"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="Contact Information" columns="2" id="pbs" rendered="{!NOT(isSuccess)}" >
+        
+        	<apex:inputText value="{!contactName}" Label="Contact Name"  id="contact_name"/>
+            <apex:inputField value="{!contact.Phone}" label="Primary Phone" id="pr_ph" />
+            <apex:inputField value="{!contact.title}" id="title"  />            
+            <apex:inputField value="{!contact.Extension__c}"/>
+            
+            <apex:inputField value="{!contact.Type__c}" Label="Type of User" id="typ_user" />
+            <apex:inputField value="{!contact.MobilePhone}" label="Cell Phone"/>
+            <apex:inputField value="{!contact.User_Name__c}" id="username"/>
+            <apex:inputField value="{!contact.Fax}"/>
+            <br/>
+            <apex:inputField value="{!contact.Email}" id="email"/> 
+          
+            <!-- Hidden Fields --> 
+            <apex:inputField value="{!contact.AccountId}" rendered="false"/>            
+            <apex:inputField value="{!contact.ownerId}" rendered="false"/>
+            <apex:inputField value="{!contact.department}" rendered="false"/>
+            <apex:inputField value="{!contact.birthdate}" rendered="false"/>
+            <apex:inputField value="{!contact.AssistantName}" rendered="false"/>    
+            <apex:inputField value="{!contact.ReportsToId}" rendered="false"/>
+            <apex:inputField value="{!contact.AssistantPhone}" rendered="false"/>
+            <apex:inputField value="{!contact.LeadSource}" rendered="false"/>
+         </apex:pageBlockSection>
+         <apex:pageBlockSection title="Address Information" columns="2" rendered="false">
+            <apex:inputField value="{!contact.MailingStreet}"/>    
+            <apex:inputField value="{!contact.OtherStreet}"/>
+            <apex:inputField value="{!contact.MailingState}"/>
+            <apex:inputField value="{!contact.OtherState}" />     
+            <apex:inputField value="{!contact.MailingPostalCode}" />
+            <apex:inputField value="{!contact.OtherPostalCode}"/>
+            <apex:inputField value="{!contact.MailingCountry}" />
+            <apex:inputField value="{!contact.OtherCountry}" />
+         </apex:pageBlockSection>
+         <apex:pageBlockSection title="Additional Information" columns="2" rendered="false">
+           <!-- <apex:inputField value="{!contact.Languages__c}"/>        -->
+          <!--  <apex:inputField value="{!contact.Level__c}"/> -->
+         </apex:pageBlockSection>
+         <apex:pageBlockSection title="Discription Information" rendered="false" >
+            <apex:inputField value="{!contact.Description}"/>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+<hr style="margin-top:50px;margin-left:200px"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+<script>   
+    window.onload = function checkCookie(){
+        var username=getCookie("apex__username");
+        if (username!=null && username!=""){
+      
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    } 
+             
+  function deleteCookie(name) {
+         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+  }
+  </script>
+</apex:page>

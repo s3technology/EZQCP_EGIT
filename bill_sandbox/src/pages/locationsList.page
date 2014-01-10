@@ -1,0 +1,137 @@
+<apex:page controller="LocationsList" cache="false" showHeader="False" >
+<title>Order EZ-QCP Assessments - EZ-QCP</title>
+<style type="text/css">
+    .pbTitle{
+    	width:310px !important;
+    }
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    input.btn[name="del"] {display: none;}
+    input.btn[name="edit"] { display: none;}
+    input.btn[name="clone"] {display: none;}
+    .configLinks{display:none;}
+    .ptBreadcrumb{display:none;} 
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+</style>
+<!--<a href="http://carepointsolutions.force.com/index"> -->
+    <apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+<!--</a>-->
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.pid}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.pid}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                 <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/><br/><br/>
+ <center><h2>Order EZ-QCP Assessments</h2> </center><br/><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select the IQCP Location / Unique Identifier you wish to order the EZ-QCP Assessment for by clicking the Order link next to that location.  As an alternative,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; you may add additional locations by clicking on the Add IQCP Location / Unique Identifier button below.<br/>
+ <br/> 
+    <apex:form style="margin-left:200px;margin-right:200px" >
+        <apex:pageBlock title="List of IQCP Locations / Unique Identifiers">
+           <apex:pageBlockButtons location="top">
+            <apex:commandButton value="Add Location / Unique Identifier" action="{!createLocation}"/>
+         </apex:pageBlockButtons>
+                 
+           <apex:pageblockTable value="{!loc}" var="l">
+                <apex:column headerValue="Action">
+                    <apex:outputLink value="/index/searchAssessment?lid={!l.Id}&name={!l.Name}&pid={!l.Account__c}&clia={!l.CLIA__c}" id="o" style="color:blue;"> Order </apex:outputLink>
+                </apex:column>
+                <apex:column value="{!l.Name}"/>
+              <!--  <apex:column value="{!l.Account__c}"/> -->
+                 <apex:column value="{!l.Location_Type__c}"/>
+                 <apex:column value="{!l.CLIA__c}"/>
+
+            </apex:pageBlockTable> 
+        </apex:pageBlock>
+    </apex:form>
+    <hr style="margin-top:50px;margin-left:200px;"/>
+   
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+<script>
+window.onload = 
+
+function checkCookie(){
+        var username = getCookie("apex__username");        
+           //    alert(username);
+        if (username!=null && username!=""){
+        
+            //checkTypeCookie();
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+   
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    }
+  </script>
+</apex:page>

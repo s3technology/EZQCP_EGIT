@@ -1,0 +1,210 @@
+<apex:page standardController="Account" extensions="CustomerAdmin" id="login_page" showHeader="false" cache="false">
+
+<style>
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+     hr{margin-left:200px;}
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+</style> 
+ <apex:image value="{!$Resource.logoEZQCP}"  style="margin-left:200px;"/>
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+                <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.id}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.id}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.id}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+            <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/><br/><br/>
+ <div style="margin:0 auto; width:800px;">
+
+<div style="margin:0 auto; width:800px; height:500px; border:1px solid #ccc; overflow:scroll;background-color: #D3D3D3;font-size:14px;">
+<div id="content">
+<p><span style="font-size: 150%;"><strong>CarePoint Solutions, Inc. Terms of Use</strong></span></p>
+<p>&nbsp;</p>
+<p><strong>Article 1. Your Agreement With CarePoint Solutions.</strong></p>
+<p>1.1. These Terms of Use (“Terms” or “Agreement”) set forth your legal agreement with CarePoint Solutions, Inc. (“CarePoint Solutions”). Your use of any CarePoint Solutions website or service (the “Service”) that refers to these Terms is subject to these Terms.</p>
+<p>1.2. CarePoint Solutions may change the Terms in its sole discretion at any time. The current version will always be posted at http://www.carepointsolutions.com/terms. Your use of the Service is always subject to the current version of the Terms.</p>
+<p>&nbsp;</p>
+<p><strong>Article 2. Definitions.</strong></p>
+<p>Unless otherwise defined, capitalized terms used in these Terms have the meanings given them below:</p>
+<p>2.1. “Account Information” means the information you provide to CarePoint Solutions when you register to use the Service, including your CarePoint Solutions user ID and log-in information.</p>
+<p>2.2. “Intellectual Property Rights” means copyright, moral rights, trademark, trade dress, patent, trade secret, unfair competition and other intellectual and proprietary rights.</p>
+<p>2.3. “Law” means any law or regulation of the United States, or any state or territory of the United States, and those of any other jurisdiction having application to the Service or any User of the Service.</p>
+<p>2.4. “Marks” means the trademarks, logos and service marks displayed on the Service.</p>
+<p>2.5. “Materials” means any materials made available to you by CarePoint Solutions, including, without limitation, information, data, documents, images, graphics, audio and video.</p>
+<p>2.6. “User” means a user of the Service.</p>
+<p>2.7. “User Data” means, without limitation, the information, data and documents that you provide to the Service in the course of your use of the Service.</p>
+<p>&nbsp;</p>
+<p><strong>Article 3. Acceptance of Terms.</strong></p>
+<p>3.1. You may not use the Service if you do not agree to the Terms. You may accept the Terms by selecting “I agree” to these Terms when it appears on the initial log-on screen, or by using the Service.</p>
+<p>3.2. You may not use the Service if you are prohibited by Law from using the Service.</p>
+<p>3.3. If and when the Terms are updated, CarePoint Solutions may require you to provide consent to the updated Terms before permitting you to make further use of the Service. Otherwise, your ongoing use of the Service constitutes your acceptance of the revised Terms.</p>
+<p>&nbsp;</p>
+<p><strong>Article 4. Privacy Policy.</strong></p>
+<p>For information about CarePoint Solutions' data protection and collection practices, please read the CarePoint Solutions Privacy Policy at http://www.carepointsolutions.com/privacy, which policy is incorporated herein by reference.</p>
+<p>&nbsp;</p>
+<p><strong>Article 5. Ownership.</strong></p>
+<p>5.1. Service and Materials. The Service and Materials, and their selection and arrangement, are protected by Intellectual Property Rights. Except as expressly provided in these Terms, CarePoint Solutions and its licensors do not grant any express or implied rights in, or to the use of, the Service and Materials. All rights, title and interest in the Service and the Materials, in all languages, formats and media, and throughout the world, are the exclusive property of CarePoint Solutions and its licensors, and nothing in the Terms shall be construed to confer to you or any third party any license or right, by implication, estoppel or otherwise, under copyright or other intellectual property laws.</p>
+<p>5.2. Trademarks. The Marks are the property of CarePoint Solutions or other rights holders. You are not permitted to use the Marks without the prior consent of CarePoint Solutions or the rights holder. CarePoint Solutions and the CarePoint Solutions logo are trademarks of CarePoint Solutions, Inc. For a current list of CarePoint Solutions' Marks, as well as certain third party Marks, please refer to the posted trademark information at http://www.carepointsolutions.com/trademarks.&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Article 6. Use of Service and Materials.&nbsp;</strong></p>
+<p>6.1. If you comply with the terms and conditions of these Terms, CarePoint Solutions grants you a non-exclusive, non-transferable, revocable right to access and use the Service, and to use the Materials, subject to the restrictions set forth herein.</p>
+<p>6.2. Except with respect to your User Data, you agree:</p>
+<p>6.2.1. Not to lease, license, rent or sell the Materials or the right to use and access the Service;</p>
+<p>6.2.2. Not to remove, obscure or alter any text or proprietary notice contained in Materials;</p>
+<p>6.2.3. Not to copy or imitate all or any part of the design, layout or look-and-feel of the Service or the Materials; and</p>
+<p>6.2.4. To use the Service and the Materials only as permitted by the Terms and any applicable Law.</p>
+<p>6.3. CarePoint Solutions employs commercially reasonable efforts to make the Service available 24 hours a day, 7 days a week. Nevertheless, the Service will be interrupted for maintenance, upgrades and repairs, or as a result of the failure of telecommunications facilities. To the extent it is within our reasonable control, CarePoint Solutions will employ reasonable means to minimize all such disruptions.&nbsp;</p>
+<p>6.4. CarePoint Solutions reserves the right to modify or discontinue, temporarily or permanently, the Service, or any portion thereof, with or without prior notice.</p>
+<p>6.5. Payment Terms.&nbsp;</p>
+<p>6.5.1. Subscription Fees. To access the Service you must purchase a subscription. Subscription fees are non-refundable. Subscription fees may change at the end of your subscription period. Subscription terms are available at http://www.carepointsolutions.com/subscriptionterms.</p>
+<p>6.5.2. Collection of Subscription Fee. You agree that in the event CarePoint Solutions is unable to collect the subscription fees owed by you to CarePoint Solutions for use of the Service, CarePoint Solutions may take such action as it deems necessary to collect outstanding subscription fees, and you will be responsible for all costs and expenses, including reasonable attorneys' fees, incurred by CarePoint Solutions in connection with such collection efforts.</p>
+<p>&nbsp;</p>
+<p><strong>Article 7. Account Information.</strong></p>
+<p>You agree that your Account Information will always be complete, accurate, and up-to-date. It is your responsibility to keep your account credentials confidential at all times, and you are solely responsible to CarePoint Solutions for all activity that occurs through use of your account. If you become aware of any unauthorized use of your account or Account Information, or any other breach of security, you agree to notify CarePoint Solutions by contacting Customer Service at support@ez-qcp.com. CarePoint Solutions may require that you change your Account Information or certain parts of your Account Information at any time for any reason.</p>
+<p>&nbsp;</p>
+<p><strong>Article 8. User Conduct.</strong></p>
+<p>8.1. You agree not to access or attempt to access the Service by any means other than the interface provided by CarePoint Solutions or to circumvent any access or use restrictions put into place by CarePoint Solutions.</p>
+<p>8.2. You agree not to use, or to encourage or permit others to use, the Service to:&nbsp;</p>
+<p>8.2.1. Access or use the Service in any manner that could damage, disable, overburden, or impair any CarePoint Solutions server or the networks connected to any CarePoint Solutions server;</p>
+<p>8.2.2. Intentionally or unintentionally interfere with or disrupt the Service or violate any applicable Law related to the access to or use of the Service, violate any requirements, procedures, policies or regulations of networks connected to the Service, or engage in any activity prohibited by these Terms;</p>
+<p>8.2.3. Disrupt or interfere with the security of, or otherwise cause harm to, the Service, systems resources, accounts, passwords, servers or networks connected to or accessible through the Service;</p>
+<p>8.2.4. Access or attempt to access any Materials that you are not authorized to access or through any means not intentionally made available through the Service; or</p>
+<p>8.2.5. Reproduce, sell, trade, resell or exploit for any commercial purpose (a) any portion of the Service or any Materials or (b) access to or use of the Service or Materials.</p>
+<p>8.3. You agree to indemnify and hold CarePoint Solutions and its subsidiaries, affiliates, officers, directors, agents, employees and licensors harmless, including reasonable attorneys' fees,&nbsp; from any claim or demand arising out of your use of the Services, your violation of the Terms, or your violation of any Intellectual Property Rights.</p>
+<p>&nbsp;</p>
+<p><strong>Article 9. User Data.</strong></p>
+<p>9.1. All User Data and related Materials will be retained by CarePoint Solutions for a period of 18 months. CarePoint Solutions undertakes no other or further obligation to retain your User Data or Materials, and no responsibility or liability for the security, privacy, storage, transmission or deletion of User Data or Materials.</p>
+<p>9.2. You agree that CarePoint Solutions retains the right to establish reasonable limits applicable to your User Data and the Materials made available to you, such as limits on file size, storage space, processing capacity and similar limits as from time to time determined by CarePoint Solutions in its sole discretion.</p>
+<p>9.3. You agree that you, not CarePoint Solutions, are entirely responsible for the accuracy and completeness of your User Data.</p>
+<p>9.4. To enable CarePoint Solutions to operate the Service and provide Materials, you hereby grant CarePoint Solutions a worldwide, royalty-free, non-exclusive, transferable and sublicensable license to adapt, display, distribute, modify, perform, publish, retain, reproduce or translate your User Data.</p>
+<p>9.5. You have no obligation to provide CarePoint Solutions with ideas, suggestions or proposals (“Feedback”). However, if you submit Feedback to CarePoint Solutions, we may use it for any purpose without compensation to you.</p>
+<p>&nbsp;</p>
+<p><strong>Article 10. Disclaimer Of Warranties</strong></p>
+<p>YOU EXPRESSLY UNDERSTAND AND AGREE THAT, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:</p>
+<p>10.1. THE SITE, SERVICE AND MATERIALS ARE PROVIDED BY CAREPOINT SOLUTIONS&nbsp;“AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE, INCLUDING THE IMPLIED WARRANTIES OF TITLE, NONINFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. WITHOUT LIMITING THE FOREGOING, CAREPOINT SOLUTIONS&nbsp;AND ITS LICENSORS MAKE NO WARRANTY (a) THAT THE SITE, SERVICE OR MATERIALS WILL MEET YOUR REQUIREMENTS OR WILL BE CONSTANTLY AVAILABLE, UNINTERRUPTED, TIMELY, SECURE OR ERROR-FREE; (b) THAT THE RESULTS THAT YOU OBTAIN FROM THE USE OF THE SITE, SERVICE OR MATERIALS WILL BE EFFECTIVE, ACCURATE OR RELIABLE; (c) THAT THE QUALITY OF THE SITE, SERVICE OR MATERIALS WILL MEET YOUR EXPECTATIONS; OR (d) THAT ANY ERRORS OR DEFECTS IN THE SITE, SERVICE OR MATERIALS WILL BE CORRECTED.&nbsp;</p>
+<p>10.2. CAREPOINT SOLUTIONS&nbsp;WILL HAVE NO LIABILITY WITH RESPECT TO YOUR USER DATA UNDER INTELLECTUAL PROPERTY RIGHTS, OR LIBEL, PRIVACY, PUBLICITY, OBSCENITY OR OTHER LAWS. CAREPOINT SOLUTIONS&nbsp;DISCLAIMS ALL LIABILITY WITH RESPECT TO THE USE, MISUSE, LOSS, MODIFICATION OR UNAVAILABILITY OF YOUR USER DATA.</p>
+<p>10.3. CAREPOINT SOLUTIONS&nbsp;WILL NOT BE LIABLE FOR ANY LOSS THAT YOU MAY INCUR AS A RESULT OF THE UNAUTHORIZED USE OF YOUR PASSWORD, ACCOUNT OR ACCOUNT INFORMATION.</p>
+<p>&nbsp;</p>
+<p><strong>Article 11. Limitation of Liability.</strong></p>
+<p>11.1. IN NO EVENT SHALL CAREPOINT SOLUTIONS, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, PARTNERS, LICENSORS OR SUPPLIERS BE LIABLE TO YOU OR ANYONE ELSE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING THOSE RESULTING FROM LOSS OF USE, DATA OR PROFITS, BASED ON ANY THEORY OF LIABILITY, INCLUDING BREACH OF CONTRACT OR WARRANTY, NEGLIGENCE OR OTHER TORTIOUS ACTION, OR ANY OTHER CLAIM ARISING OUT OF YOUR USE OF OR ACCESS TO THE SITE, SERVICE OR MATERIALS, REGARDLESS WHETHER FORESEEABLE AND REGARDLESS WHETHER CAREPOINT SOLUTIONS&nbsp;HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+<p>11.2. CAREPOINT SOLUTIONS' AGGREGATE LIABILITY AND THAT OF ITS AFFILIATES, LICENSORS AND SUPPLIERS UNDER THIS AGREEMENT SHALL NOT EXCEED THE AGGREGATE AMOUNT YOU HAVE PAID FOR ACCESS TO THE SERVICE DURING THE TWELVE-MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO ANY CLAIM OF LIABILITY. THIS LIMITATION WILL APPLY EVEN IF CAREPOINT SOLUTIONS&nbsp;HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY. CAREPOINT SOLUTIONS&nbsp;SHALL NOT BE LIABLE FOR DAMAGES, CLAIMS BY THIRD PARTIES OR ANY OTHER CLAIM FOR ANY CAUSE WHATSOEVER, REGARDLESS OF THE FORM OF ACTION, ARISING MORE THAN ONE (1) YEAR AFTER THE DISCOVERY OF THE EVENT GIVING RISE TO ANY SUCH CLAIM. &nbsp;</p>
+<p>11.3. YOU ACCEPT THE TERMS AND CONDITIONS OF THIS AGREEMENT WITH THE UNDERSTANDING THAT CAREPOINT SOLUTIONS'&nbsp;LIABILITY IS LIMITED, THE FEES PAYABLE HEREUNDER HAVE BEEN AND WILL BE CALCULATED ACCORDINGLY, AND THAT YOU MAY REDUCE YOUR RISK FURTHER BY MAKING APPROPRIATE PROVISION FOR INSURANCE.&nbsp; YOU FURTHER AGREE TO MITIGATE ALL LOSSES OR DAMAGES.</p>
+<p>&nbsp;</p>
+<p><strong>Article 12. Termination.</strong></p>
+<p>12.1. Termination by You. You may cease using the Service at any time. You may remove your User Data from the Service either by deleting it manually or by contacting Customer Service and requesting that your subscription be cancelled and your User Data deleted from the Service. To terminate your subscription contact Customer Service at&nbsp;support@ez-qcp.com. Fees paid by you prior to termination are not refundable. Termination of your account shall not relieve you of the obligation to pay accrued fees or charges.</p>
+<p>12.2. Termination by CarePoint Solutions. CarePoint Solutions may at any time terminate our Agreement with you if:</p>
+<p>12.2.1. You have breached any provision of the Terms, as determined by CarePoint Solutions in its sole and absolute discretion;</p>
+<p>12.2.2. CarePoint Solutions is required to do so by Law; or</p>
+<p>12.2.3. CarePoint Solutions has elected to discontinue the Service (or any part thereof).</p>
+<p>Termination of your account will result in deletion from the Service of your Account Information and your User Data and all related information and Materials associated with your account. Termination of your account will not terminate (a) any license that you have granted to CarePoint Solutions, any of CarePoint Solutions' disclaimers or its limitation of damages and liabilities hereunder or (b) Articles 8, 9, 10, 11, 12, 13, 14 and 15, all of which will survive the termination of this Agreement, regardless of the circumstances giving rise to termination.</p>
+<p>12.3. Upon termination of your use of the Service by you or by CarePoint Solutions for any other reason other than for cause, CarePoint Solutions will make a reasonable effort to notify you, at the email address you provide to CarePoint Solutions as part of your registration, with instructions on how to retrieve your User Data.</p>
+<p>12.4. In the event of termination by CarePoint Solutions for reasons other than breach of these Terms, CarePoint Solutions will provide you with prior notice and will provide you with a pro rata refund of the prepaid and unused portion of the subscription fee.</p>
+<p>&nbsp;</p>
+<p><strong>Article 13. Export Control Laws.</strong></p>
+<p>You acknowledge that the Service and Materials are subject to U.S. export laws, restrictions, and regulations, including the United States Export Administration Act (“Export Laws”) and that you will comply with the Export Laws. You will not ship, transfer, export or re-export the Materials, directly or indirectly, to: (a) any countries that are subject to U.S. export restrictions (an “Embargoed Country”), (b) any end-user who you know or have reason to know will utilize them in any manner prohibited by the Export Laws (a “Prohibited Use”), or (c) any end-user who has been prohibited from participating in U.S. export transactions by any federal agency of the U.S. government (a “Sanctioned Party”). In addition, you are responsible for complying with any local laws in your jurisdiction which may impact your right to import, export or use the Service or Materials. You represent and warrant that (i) you are not a citizen of, or located within, an Embargoed Country, (ii) you will not use the Service or Materials for a Prohibited Use, and (iii) you are not a Sanctioned Party. All rights to use the Service and Materials are granted on condition that such rights are forfeited if you fail to comply with the terms of this Agreement.&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Article 14. Resolution of Disputes.</strong></p>
+<p>14.1. Venue. You agree that any claim or dispute you may have against CarePoint Solutions must be resolved by a court located in Suffolk County, Massachusetts, United States of America. You agree to submit to the personal jurisdiction of the courts located in Suffolk County, Massachusetts, United States of America for the purpose of litigating such claims or disputes. The parties specifically disclaim the U.N. Convention on Contracts for the International Sale of Goods.</p>
+<p>14.2. Notwithstanding the foregoing, in the event of your or others' unauthorized access to or use of the Service in violation of the Terms, you agree that CarePoint Solutions shall be entitled to apply for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.</p>
+<p>&nbsp;</p>
+<p><strong>Article 15. Miscellaneous.</strong></p>
+<p>15.1. Choice of Law. Your relationship is with CarePoint Solutions, Inc., a United States corporation organized under the laws of the State of Delaware, and you agree to be bound by the laws of the Commonwealth of Massachusetts, without regard to its conflict of laws principles, and the laws of the United States in all matters arising out of this Agreement.</p>
+<p>15.2. Notice to CarePoint Solutions. Any notice provided to CarePoint Solutions pursuant to the Terms should be sent to CarePoint Solutions, Inc., PO Box 900, Westford, Massachusetts 01886, Attention: Legal.</p>
+<p>15.3. Notice to You. CarePoint Solutions may provide you with notices, including those regarding changes to the Terms, by email, regular mail, postings on or within the Service, or other reasonable means.</p>
+<p>15.4. Entire Agreement. The Terms (together with any subscription agreement you may have delivered at the time you subscribed to use the Service) constitute the entire agreement between you and CarePoint Solutions with respect to your access to or use of the Service and Materials and supersede any prior agreements between you and CarePoint Solutions regarding such subject matter.</p>
+<p>15.5. Non-Assignment. You may not assign or otherwise transfer any right granted hereunder without CarePoint Solutions's written consent. CarePoint Solutions's rights are transferable by CarePoint Solutions without restriction.</p>
+<p>15.6. Severability. If for any reason a court of competent jurisdiction finds any provision of these Terms, or any portion hereof, to be unenforceable, that provision shall be enforced only to the extent permitted by such court, and the remainder of the Terms shall continue in full force and effect.</p>
+<p>15.7. Waiver. Any failure by CarePoint Solutions to enforce or exercise any provision of the Terms, or any related right, shall not constitute a waiver of that provision or right.&nbsp;</p>
+<p>15.8. You are solely responsible for your familiarity and compliance with any laws that may prohibit you from participating in or using any part of the Service.</p>
+<p>&nbsp;</p>
+<p>CarePoint Solutions Terms of Use 2013.10.03</p>
+<div></div>
+
+  
+
+
+</div>
+</div>
+
+ <div style="margin:0 auto; width:auto; text-align:center;">
+<apex:form style="margin:o auto;">
+ <label for="select" style="margin:o auto;">
+ <apex:inputCheckbox id="select" onChange="initthis(id);"/>I agree to the above terms and conditions.</label><br/><br/>
+ <apex:commandButton value="Next" id="signup_btn" action="{!signUp}"  style="margin:o auto;"/>  
+<script>
+window.onload = function(){
+		document.getElementById('login_page:j_id3:signup_btn').className = 'btnDisabled';
+}
+function initthis(id){
+	var btn = document.getElementById(id).checked;
+	if(btn){ document.getElementById('login_page:j_id3:signup_btn').className = 'btn'; }
+	else{    document.getElementById('login_page:j_id3:signup_btn').className = 'btnDisabled'; }
+}	
+</script>
+</apex:form>
+</div>
+</div>
+
+<hr style="margin-top:50px;margin-left:200px"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+
+</apex:page>

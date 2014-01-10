@@ -1,0 +1,134 @@
+<apex:page standardController="LocationAssesmentRelationship__c" extensions="assesmentIfram" showHeader="false" cache="false">
+	<style>
+    	.horizontalNavigationBar{
+        	font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+            font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+            margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+       	}
+        #navigationBottom {margin-left:200px;}
+        .horizontalNavigationBar { width: 1090px; }
+        .horizontalNavigationBar { float: left; }  
+        .horizontalNavigationBar .module a { margin-left: 0; }  
+        .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+        .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+        .horizontalNavigationBar ul li a { display: block; }
+        .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+        #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+        .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+        .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+        .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+    
+        .footer{
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+            margin-left:200px;
+            padding-top: 35px;
+            padding-bottom: 40px;
+            color:hsl(0, 0%, 45%);
+            margin-left:280px;
+        }
+	</style>
+	
+    <apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+	
+	<div id="navigationBottom">
+    	<div class="horizontalNavigationBar">
+        	<ul class="content-navigation">
+            	<li class="module">
+                	<div>
+                    	<a href="/index/index?id={!LocationAssesmentRelationship__c.Location__r.Account__c}">
+                        	<span>Account Central</span>
+                    	</a>
+                	</div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!LocationAssesmentRelationship__c.Location__r.Account__c}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                	<div>
+                    	<a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        	<span>Cart</span>
+                    	</a>
+                	</div>
+            	</li>
+            	<li class="module">
+            		<div>
+                		<a href="/index">
+                        	<span>Logout</span>
+                    	</a>
+                	</div>
+            	</li>
+            	<li class="module">
+                	<div>
+                    	<a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      		<span>  Help </span>
+                    	</a>
+                	</div>
+            	</li>
+        	</ul>
+        </div>
+	</div>
+	<br/><br/>
+	
+	<div id="assement">
+		<script type="text/javascript">
+			//var CLIA = "{!CLIA}";
+			//var Loc  =  "{!LocName}"; 
+		</script>
+		<!--  
+			<apex:pageBlock >
+    			<table class="detailList" cellspacing="0" cellpadding="5" border="0" width="553px">
+        			<tr>
+            			<td align="center" width="50%" style="padding-right:8px; border-bottom: 1px solid #ECECEC; font-weight: bold; font-size: 91%; color:#505050;"> CLIA</td>
+            			<td align="left" width="50%" style="padding-left:10px; border-bottom: 1px solid #ECECEC; font-weight: bold; font-size: 91%; color:#505050;"> <apex:outputText value="{!CLIA}" /></td>                
+        			</tr>
+        			<tr>
+            			<td align="center" style="padding-right:8px; border-bottom: 1px solid #ECECEC;  font-weight: bold; font-size: 91%; color:#505050;">Location Name</td>
+            			<td align="left" style="padding-left:10px; border-bottom: 1px solid #ECECEC;  font-weight: bold; font-size: 91%; color:#505050;"> <apex:outputText value="{!LocName}" /></td>
+        			</tr>
+      			</table> 
+			</apex:pageBlock>
+		--> 
+	</div><br/>
+	
+	<div style="float:clearall"></div>
+    
+    <apex:includeScript value="{!$Resource.jquery}"/> 
+    <apex:iframe src="{!LocationAssesmentRelationship__c.Current_URL__c}" scrolling="true" height="1700px" id="theIframe2" 
+                                                rendered="{!NOT(ISNULL(LocationAssesmentRelationship__c.Current_URL__c))}"/>
+    <hr style="margin-left:200px;margin-top:20px;"/>
+	<div class="footer">
+    	Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+	</div>
+	<script>
+    	jQuery(document).ready(function() {
+        	$('body iframe').load(function(){
+            	$(window).scrollTop(0);
+            	var iframe=document.getElementById("theIframe2").contentWindow;
+            	var CLIA = "{!CLIA}";
+            	var Loc  =  "{!LocName}";
+            	var Address  =  "{!Address}";
+            	var city  =  "{!city}"; 
+            	var state  =  "{!state}";
+            	iframe.postMessage(""+CLIA+":"+Loc+":"+Address+":"+city+":"+state+"", "http://ezqcp.fluidsurveys.com");
+        	});
+        /**********************/
+        	function receiveMessage(event)
+        	{
+            	console.log(event.data);
+            	console.log(event.origin);
+            	console.log('riaz'+event.origin);
+            	if (event.origin !== "http://ezqcp.fluidsurveys.com")
+                	return;
+            	console.log(event.data);
+            	//event.source.postMessage("hi there yourself!  the secret response " + "is: rheeeeet!", event.origin);
+        	}
+        	window.addEventListener("message", receiveMessage, false);
+        	/**********************/
+    	});
+	</script>
+
+</apex:page>

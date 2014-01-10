@@ -1,0 +1,193 @@
+<apex:page standardController="Account" extensions="CustomerAdmin" id="login_page" showHeader="false" cache="false">
+<title>EZ-QCP Login/Register page </title>
+<style>    
+    hr { 
+        margin-left:200px;
+    }
+   .tabPanel{
+        margin-top:10px;
+        margin-left:200px;
+        width:700px;
+    }
+    p{
+        font-size:15px;
+        text-align:justify;  
+    }
+    h1{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        font-size:15px;
+        font-style:italic;
+    }
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    #pbsDiv{
+        background-color:rgb(138,158,190);
+        background-image:url('/img/alohaSkin/opacity75.png');
+        Padding:4px 16px;
+        font-weight:bold;
+        border-width: 1px 0px 0px;
+        color: rgb(0, 0, 0);
+        padding: 4px 16px;
+        border-top: 1px solid rgb(255, 255, 255);
+        font-size: 1.2em;
+        padding: 4px 16px;
+        border-top: 1px solid rgb(255, 255, 255);
+        margin-top:10px;
+    } 
+</style>
+
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:facility"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:contact_name"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:pr_phone"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:user_name"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:email"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs1:title"]');
+         
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ba_line1"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ba_city"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ba_state"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ba_zip"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ba_country"]');
+         
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ma_line1"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ma_city"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ma_state"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ma_zip"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="login_page:signup_form:pb2:pbs2:ma_country"]');            
+      }); 
+</script>
+
+<apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+
+<hr/>
+<apex:tabPanel switchType="Ajax" id="theTabPanel" headerAlignment="left" value="{!tab}" styleClass="tabPanel">
+    <apex:tab label="Login" name="login" id="login">
+        <apex:form id="login_form">
+            <apex:pageBlock id="pb" title="Account Login">
+                <apex:pageBlockButtons id="pbb" location="bottom">
+                     <apex:commandButton value="Login" id="login_btn" onclick="return validate();" action="{!login}"/>            
+                </apex:pageBlockButtons> 
+                <apex:pageBlockSection columns="1" id="pbs" >
+                    <apex:inputText value="{!user_name}" label="Username" id="user_name" required="true"/>
+                    <apex:inputSecret value="{!password}" label="Password" id="password"/><a href="/index/forgotPasswordPage">Forgot Password</a> 
+                    <apex:outputText escape="false" value="{!result}" style="color:red;font-size:20px"></apex:outputText>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:tab>
+    <apex:tab label="Register" name="signup" id="signup"> 
+        <apex:form id="signup_form">
+            <apex:pageBlock id="pb2" mode="edit">
+                 <apex:messages title="Error! " style="color:#CC0000;"/>                           
+                <apex:pageBlockButtons id="pbb2" location="bottom">
+                     <apex:commandButton value="Next" id="next_btn" action="{!next}"/>            
+                </apex:pageBlockButtons>    
+                <apex:pageBlockSection title="Account Details" columns="3" id="pbs1" rendered="{!NOT(isSuccess)}" > 
+                    <apex:inputText value="{!facility_name}" label="Facility Name" id="facility" tabIndex="1"/><br/>
+                    <apex:inputText value="{!pr_phone}" label="Primary Phone"  id="pr_phone" tabIndex="5"  onblur=" Phone();" />
+                    <apex:inputText value="{!contactName}" label="Contact Name"  tabIndex="2" id="contact_name"/><br/>
+                    <apex:inputText value="{!extention}" label="Extension" id="extention" tabIndex="6" onblur=" Phone();"/>
+                    <apex:inputText value="{!title}" label="Title" tabIndex="3" id="title" /><br/>
+                    <apex:inputText value="{!cell_phone}" label="Cell Phone" id="cell_phone" tabIndex="7"/>
+                    <apex:inputText value="{!user_name}" label="Username"   tabIndex="4" id="user_name"/><br/>
+                    <apex:inputText value="{!fax}" label="Fax" id="fax" tabIndex="8"/>
+                    <apex:outputLabel ></apex:outputLabel><br/>
+                    <apex:inputText value="{!email}" label="Email"  id="email" tabIndex="9"/>                                        
+               </apex:pageBlockSection> 
+               <div id="pbsDiv"><h3>Billing Address Details &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Mailing Address Details</h3></div>
+               <apex:pageblockSection columns="3" id="pbs2">
+                   <apex:inputText value="{!ba_line1}"  label="Address Line 1"  id="ba_line1" tabIndex="10"/><br/>
+                   <apex:inputText value="{!ma_line1}"  label="Address Line 1"  id="ma_line1" tabIndex="17"/>
+                   
+                   <apex:inputText value="{!ba_line2}"  label="Address Line 2" id="ba_line2" tabIndex="11"/><br/>
+                   <apex:inputText value="{!ma_line2}"  Label="Address Line 2" id="ma_line2" tabIndex="18"/>
+                   
+                   <apex:inputText value="{!ba_city}"  label="City"  id="ba_city" tabIndex="12"/>
+                   <apex:commandButton value="Copy to Mailing Address" onclick="return CopyAddress();" reRender="false" id="copy2ma" tabIndex="16"/>
+                   <apex:inputText value="{!ma_city}"  Label="City"  id="ma_city" tabIndex="19"/>
+                   
+                   <apex:inputText value="{!ba_state}"  label="State/Province"  id="ba_state" tabIndex="13"/><br/>
+                   <apex:inputText value="{!ma_state}"  label="State/Province"  id="ma_state" tabIndex="20"/>
+                   
+                   <apex:inputText value="{!ba_zip}"    label="Zip/Postal Code"  id="ba_zip" tabIndex="14" /><br/>
+                   <apex:inputText value="{!ma_zip}"    label="Zip/Postal Code"  id="ma_zip" tabIndex="21"/>
+                   
+                   <apex:inputText value="{!ba_country}" label="Country"  id="ba_country" tabIndex="15"/><br/>
+                   <apex:inputText value="{!ma_country}" label="Country"  id="ma_country" tabIndex="22"/>
+               </apex:pageblockSection>
+           </apex:pageBlock>
+       </apex:form>   
+  </apex:tab>    
+  <apex:tab label="Help" name="help"  id="help" >
+    <apex:form >
+        <br/><br/><br/><br/>
+        For additional assistance using the EZ-QCP online tool, please contact our support team at <b> <a href="mailto:support@ez-qcp.com">support@ez-qcp.com</a></b>.
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>       
+    </apex:form> 
+  </apex:tab>
+</apex:tabPanel>    
+<hr style="margin-top:20px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+    <script type="text/javascript" language="javascript">
+        //Delete already existing cookies
+        window.onload = function(){
+            
+            document.cookie = 'apex__username' + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+            document.cookie = 'apex__customertype' + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+            //document.cookie = 'apex__cart' + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';       
+            
+        }
+        function validate(){
+            var user_name = document.getElementById('login_page:login_form:pb:pbs:user_name').value;
+            var password  = document.getElementById('login_page:login_form:pb:pbs:password').value;
+            if(user_name.length==0){
+                alert('Enter Username');
+                return false;
+            }           
+            else if(password.length==0){
+                alert('Enter Password');
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        
+        function CopyAddress(){
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_line1').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_line1').value;
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_line2').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_line2').value;
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_city').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_city').value;
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_state').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_state').value;
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_zip').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_zip').value;
+        	document.getElementById('login_page:signup_form:pb2:pbs2:ma_country').value = document.getElementById('login_page:signup_form:pb2:pbs2:ba_country').value; 
+        }
+        function Phone(){
+        
+        
+       var ph= document.getElementById('login_page:signup_form:pb2:pbs1:pr_phone').value;
+       //alert(ph);
+       ph=ph.length;
+       if(ph<10){
+       alert("Enter 10 digits long Number."); 
+     	//  document.getElementById('login_page:signup_form:pb2:pbs1:pr_phone').focus();
+      	// Phone();
+       	}
+       }
+        
+   </script>
+</apex:page>

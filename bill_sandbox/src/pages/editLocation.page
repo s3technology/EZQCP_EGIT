@@ -1,0 +1,193 @@
+<apex:page standardController="Location__c" extensions="EditLocation" showHeader="false" cache="false" id="edLoc">
+  <style>
+      .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+
+   .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    #hoverDiv{
+        display : none;
+        width: 330px;
+        position: absolute;
+        top: 222px;
+        left: 515px;
+        background-color: rgb(255, 255, 208);
+        border-color: rgb(51, 51, 51);
+        padding: 8px 10px;
+        border-radius: 3px;
+        font-size: 1em; 
+        border: 1px solid black;
+    }
+   </style>
+
+<apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!Location__c.Account__c}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!Location__c.Account__c}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.id}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/>  <!--
+  <apex:sectionHeader title="Location Edit" subtitle="{!Location__c.Name}"/> -->
+<apex:form style="margin-left:200px;margin-right:200px" id="locForm" >
+    <apex:pageMessages />
+    <apex:pageBlock title="Location Edit" mode="edit" id="pb1">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!savelocation}" value="Save"/>
+        <apex:commandButton value="Cancel" onclick="parent.location='/index/index?id={!Location__c.Account__c}'" reRender="false"/> 
+      </apex:pageBlockButtons>         
+      <apex:pageblockSection title="Information" columns="1" id="pbs1">
+          <div id="hoverDiv">This will be used to uniquely identify each<br/> 
+            IQCP within your facility (e.g., Third Floor Blood Gas Lab).<br/>  
+            This will appear at the top of each EZ-QCP report</div>
+          <apex:inputField value="{!Location__c.name}" required="true" id="loc_name" onmouseover="showMessage();" onmouseout="hideMessage();" onfocus="showMessage();" onblur="hideMessage();" onchange="showMessage();"/>
+          <apex:pageBlockSectionItem > 
+                 <apex:outputLabel value="CLIA Number"></apex:outputLabel>
+                  <apex:outputLabel value="{!Location__c.CLIA__c}"></apex:outputLabel>
+           </apex:pageBlockSectionItem>
+
+          <apex:inputField value="{!Location__c.Location_Type__c}" required="true" id="type" onchange="checkvalue(this.value);"/>
+          <apex:pageblocksectionItem id="pbsio">
+  			<apex:outputLabel id="otherL" style="display:none" >Other</apex:outputLabel>
+  			<apex:inputField value="{!Location__c.Other__c}" style="display:none" id="other"/>
+        </apex:pageblocksectionItem>
+        <script>   	  
+function checkvalue(name){
+  if(name=='Other'){
+ // alert(name);
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:otherL').style.display = 'block';
+ 	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:other').style.display = 'block';
+  }else{
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:otherL').style.display = 'none';
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:other').style.display = 'none';  	
+  }
+}
+          </script>
+      </apex:pageblockSection>
+      <apex:pageblockSection title="Physical Address" columns="1">
+          <apex:inputField value="{!Location__c.Address__c}" required="true"/>
+          <apex:inputField value="{!Location__c.Address_Line_2__c}"/>
+          <apex:inputField value="{!Location__c.City__c}" required="true"/>
+          <apex:inputField value="{!Location__c.State__c}" required="true"/>
+          <apex:inputField value="{!Location__c.Zip_Code__c}" required="true"/>  
+          <apex:inputField value="{!Location__c.Country__c}" required="true"/>  
+      </apex:pageblockSection>
+      <apex:pageBlockSection title="Relationship" columns="1" rendered="false">
+          <apex:inputField value="{!Location__c.Account__c}" rendered="false"/>
+      </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form> 
+<hr style="margin-top:50px;margin-left:200px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+<script>
+         
+    window.onload =  
+    function checkCookie(){
+    //
+     name= document.getElementById('edLoc:locForm:pb1:pbs1:type').value;  
+ // alert(name);
+ //  function checkvalue(name){
+  if(name=='Other'){
+ // alert(name);
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:otherL').style.display = 'block';
+ 	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:other').style.display = 'block';
+  }else{
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:otherL').style.display = 'none';
+  	document.getElementById('edLoc:locForm:pb1:pbs1:pbsio:other').style.display = 'none';  	
+  }
+
+    
+      /// 
+        var username=getCookie("apex__username");
+        if (username!=null && username!=""){
+           //alert("Welcome again " + username);
+           //setCookie("username",username,1);
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+   
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    }  
+             
+  function deleteCookie(name) {
+         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/index';
+  }
+  function showMessage(){
+    document.getElementById("hoverDiv").style.display = "block";    
+  }
+      function hideMessage(){
+    document.getElementById("hoverDiv").style.display = "none";    
+  }
+
+  </script>
+</apex:page>

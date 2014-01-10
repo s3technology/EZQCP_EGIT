@@ -1,0 +1,193 @@
+<apex:page cache="false" standardController="Location__c" extensions="LocationDetail" showHeader="false">
+<title>Location Detail - EZ-QCP</title>
+<style type="text/css">
+    .footer{ 
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+    input.btn[name="del"] {display: none;}
+    input.btn[name="edit"] { display: none;}
+    input.btn[name="clone"] {display: none;}
+    .configLinks{display:none;}
+    .ptBreadcrumb{display:none;} 
+    //td.dataCol.col02 a{display:none;}
+    //.pbBody a{display:none;}
+    .rLink {
+        color:blue !important;
+        text-decoration:none;
+    }
+    .rLink:hover{
+        color:red !important;
+        text-decoration:underline;
+    }
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+	h3{
+		margin-left:8px;
+	}
+</style>
+
+<apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!Location__c.Account__c}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!Location__c.Account__c}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                 <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!Location__c.Account__c}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/>
+
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+          //jQuery('table').find('td:contains("Address")').parent().hide();    
+          jQuery('table').find('td:contains("Order")').parent().hide();   
+        });          
+</script>
+
+
+<div style="margin-left:200px;margin-right:200px;">
+
+<apex:form style="text-align:center;margin-left:200px;margin-right:200px;">
+    
+    <apex:commandButton value=" Edit " onclick="parent.location='/index/editLocation?id={!Location__c.Id}'" rerender="false" rendered="{!show}"/>
+    <apex:commandButton value=" Delete " action="{!deleteLocation}" styleClass="hide" rendered="{!show}"/>
+    <apex:commandButton value=" Cancel " onclick="parent.location='/index/index?id={!Location__c.Account__c}'" reRender="false"/>
+    <apex:inputField value="{!Location__c.Account__c}" rendered="false" />                  
+
+</apex:form>
+
+<apex:detail subject="{!Location__c.Id}" relatedList="false" inlineEdit="false"/>
+
+<apex:form id="Assesmentform">
+   <apex:pageBlock title="EZ-QCP Assessments">
+       <apex:pageBlockButtons location="top">
+           <apex:commandButton value="Order EZ-QCP Assessment" onclick="parent.location='/index/searchAssessment?lid={!Location__c.Id}&name={!Location__c.Name}&pid={!Location__c.Account__c}'" reRender="false" rendered="{!show}"/>
+       </apex:pageBlockButtons>
+       <apex:actionStatus id="deletingAssesment" startstyle="color:red;" startText="Deleting...."></apex:actionStatus> 
+       <apex:pageBlockTable value="{!la2}" var="d">
+           <apex:column headerValue="Action" style="min-width:100px" >
+          	   <!-- <a href="javascript:if (window.confirm('Are you sure?')) DeleteAssessment('{!d.id}');" class="rLink">Deactivate</a> -->
+               <apex:outputLink value="/index/assessmentDetail?id={!d.Assessment__c}&pid={!Location__c.Id}&larid={!d.Id}" styleClass="rLink">View</apex:outputLink> |
+       <apex:outputLink value="javascript:if (window.confirm('Are you sure?')) DeleteAssessment('{!d.id}'); void(0);" styleClass="rLink" rendered="{!show}">  Del </apex:outputLink> 
+           </apex:column>  
+           <apex:column headerValue="IQCP Location / Unique Identifier" value="{!d.Location__r.Name}" />
+           <apex:column headerValue="Department" value="{!d.Location__r.Location_Type__c}"/>
+           <apex:column headerValue="Manufacturer" value="{!d.Assessment__r.Manufacturer__c}"/>
+           <apex:column headerValue="Device" value="{!d.Assessment__r.Device__c}"/>
+       </apex:pageBlockTable>
+   </apex:pageBlock>
+   <apex:actionFunction action="{!deleteLAR}" name="DeleteAssessment" reRender="Assesmentform" status="deletingAssesment">
+       <apex:param name="larid" value="" assignTo="{!larId}"/>
+   </apex:actionFunction>
+   </apex:form>
+<hr style="margin-top:50px;"/>
+   </div>   
+   
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+    <script type="text/javascript">
+    jQuery.noConflict();
+      jQuery(document).ready(function(){
+           
+        if(jQuery("tr td:contains('Department')").next("td").html() != 'Other'){
+        	jQuery("tr td:contains('Other')").hide();
+        	jQuery("tr td:contains('Other')").next("td").hide();
+        	}else{
+        	jQuery("tr td:contains('Other')").show();
+        	jQuery("tr td:contains('Other')").next("td").show();
+        	}
+          //  jQuery('td a').hide();
+                     
+      });          
+    </script>
+
+
+
+
+
+
+<script>
+window.onload = 
+function checkCookie(){
+        var username = getCookie("apex__username");        
+        if (username!=null && username!=""){
+            //checkTypeCookie();
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    } 
+  </script>
+</apex:page>

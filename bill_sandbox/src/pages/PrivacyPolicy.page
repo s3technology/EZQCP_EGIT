@@ -1,0 +1,139 @@
+<apex:page showHeader="false">
+<style>
+.horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+#navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+     hr{margin-left:200px;}
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }   
+</style>
+<apex:image value="{!$Resource.logoEZQCP}"  style="margin-left:200px;"/>
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+             <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.id}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.id}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.id}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+            <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/><br/><br/>
+<div style="margin:0 auto; width:800px;">
+
+<div style="margin:0 auto; width:620px;font-size:16px;font-family:time new roman;">
+
+<div id="content">
+<p><span style="font-size: 150%;"><strong>CarePoint Privacy Policy</strong></span></p>
+<p></p>
+<p>This privacy policy describes the privacy practices CarePoint applies to its website and online services, and in certain of its marketing and advertising activities. Related information may be found in CarePoint’s Terms of Use – <a href="http://www.carepointsolutions.com/terms" style="color:blue;">http://www.carepointsolutions.com/terms</a>.</p>
+<p></p>
+<p><u>CarePoint ID, registration and customer support</u></p>
+<p>When you register to use CarePoint’s website or services or contact us for support, CarePoint collects information that identifies you (“Personally Identifiable Information”). Personally Identifiable Information includes your name, company name, telephone number, email address and credit card or other payment information. Certain of this information is required and other information is optional. </p>
+<p></p>
+<p><u>CarePoint’s Use of Personally Identifiable Information</u></p>
+<p></p>
+<p>CarePoint uses Personally Identifiable Information in a variety of ways, these include:</p>
+<ul>
+<li>Creating your account and providing you with the services you have subscribed for</li>
+<li>Communicating with you about the products and services you’ve purchased, offering you additional products and services and billing you</li>
+<li>Improving our website and services</li>
+<li>Diagnosing problems with our website</li>
+<li>Enforcing our terms of service, investigating fraud and protecting our customers</li>
+</ul>
+<p>We will retain your personal information for as long as necessary to enforce our agreements, to provide you with the services you have subscribed for, and to comply with our legal obligations. We will not sell or authorize any third party to use your credit card or other payment information, your e-mail address or any other information that personally identifies you without your permission.</p>
+<p><u>CarePoint websites and services</u></p>
+<p>We may also collect information that your browser sends to our servers whenever you visit a CarePoint website. For example, your browser or device may tell us your IP address (which may tell us where you are located) and the type of browser or device you are using. When you visit our website, your browser may also tell us what web page led you to our website and, if applicable, the search terms you typed into a search engine that led you to us. CarePoint may collect information about how you use our website and applications by using cookies and similar technologies, and our servers may collect similar information when you are logged in to the website. Depending on the website or application, this information may be anonymous or it may be associated with you.</p>
+<p><u>Cookies</u></p>
+<p>We use cookies and similar technologies to make our website and applications work more efficiently. For example, when you return to our website, cookies identify you and prompt the site to provide your username (not your password), so you can sign in more easily. These technologies also enable us to learn more about our users and their likely interests. Finally, we use information gained through cookies to compile statistical information about the use of our website, such as the time users spend at the site. These statistics do not include Personally Identifiable Information.</p>
+<p><u>Contractor and Third Party Access to Personally Identifiable Information</u></p>
+<p>CarePoint works with unaffiliated companies that help us run our business. These contractors provide services such as customer support, credit card processing, and email management. In some cases, these companies have access to Personally Identifiable Information. All contractors are required to sign contracts in which they promise to protect Personally Identifiable Information using procedures reasonably equivalent to ours. They are not permitted to use your information for their own purposes.</p>
+<p>We may also disclose Personally Identifiable Information to attorneys and law enforcement authorities to address contract violations or illegal behavior. And we disclose Personally Identifiable Information when we are required to in response to a subpoena, court order or other applicable law or legal process.</p>
+<p>As noted above, we compile website usage statistics from data collected through cookies. We may publish those statistics or share them with third parties, but they do not include Personally Identifiable Information.</p>
+<p></p>
+<p><u>Security</u></p>
+<p>Personally Identifiable Information and your data files are stored on CarePoint’s servers and the servers of contractors who provide data storage services to us. We provide reasonable administrative, technical and physical security controls to protect your information and data, and require our contractors to do likewise. Unfortunately, even with these measures, we cannot guarantee the security of Personally Identifiable Information. By using our website, you acknowledge and agree that we make no such guarantee, and that you use our website at your own risk.</p>
+<p><u>Changes to This Policy</u></p>
+<p>This privacy policy may be amended from time to time. Any such changes will be posted on this page. If we make a significant or material change in the way we use your Personally Identifiable Information, notice of the change will be prior to its taking effect.</p>
+<p>If you have a privacy question or complaint, please email us at support@ez-qcp.com.</p>
+</div></div></div>
+<hr style="margin-top:50px;margin-left:200px"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a> 
+</div>
+<script>
+
+
+    window.onload = function checkCookie(){
+        var username = getCookie("apex__username");   
+        if (username!=null && username!=""){
+            //DO NOTHING
+        }
+        else{
+            document.getElementById("navigationBottom").style.display='none';
+        }
+   }
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+       }
+   } 
+  </script>
+</apex:page>

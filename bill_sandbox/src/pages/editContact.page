@@ -1,0 +1,129 @@
+<apex:page standardController="Contact" extensions="EditContact" showHeader="false" cache="false" title="Edit Contact - EZ-QCP" id="editCont"> 
+<title>Edit Contact - EZ-QCP</title>
+
+<style>
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+
+
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px; 
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+
+</style>
+<apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+               jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editCont:editCont_form:editCont_pb:editCont_pbs:contact_name"]');
+      		   jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editCont:editCont_form:editCont_pb:editCont_pbs:PrimaryPhone"]');
+      		   jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editCont:editCont_form:editCont_pb:editCont_pbs:Title"]');
+      		   jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('select[name="editCont:editCont_form:editCont_pb:editCont_pbs:Type1"]');
+      		   jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="editCont:editCont_form:editCont_pb:editCont_pbs:Email"]');
+      		    
+      		     
+         });
+         </script>
+
+<apex:image value="{!$Resource.logoEZQCP}" style="margin-left:200px;"/>
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+            <li class="module">
+                <div>
+                    <a href="/index/index?id={!Contact.AccountId}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!Contact.AccountId}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li>
+                
+                <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+             <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/><br/><apex:form style="margin-left:200px;margin-right:200px;" id="editCont_form">
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:pageBlock title="User Edit" mode="edit" id="editCont_pb">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Save" action="{!editCon}"/>
+            <apex:commandButton value="Cancel" onclick="parent.location = '/index/index?id={!Contact.AccountId}'" reRender="false"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="Contact Information" columns="2" id="editCont_pbs">
+        <apex:inputText value="{!contactName}" Label="Contact Name"  required="true" id="contact_name"/>
+           <!--   <apex:inputText value="{!FirstName}" Label="First Name"/>
+           <apex:inputText value="{!LastName}" Label="Last Name"/> -->
+            <apex:inputText value="{!Phone}" Label="Primary Phone" required="true"  id="PrimaryPhone"/>
+            <apex:inputText value="{!Title}" Label="Title" required="true" id="Title"/>
+            <apex:inputText value="{!Extension}" Label="Extension"/>
+            
+            <apex:selectList value="{!Type}" size="1" label="Type of User" required="true"   id="Type1">
+               
+                <apex:selectOption itemValue="Account Administrator" itemLabel="Account Administrator"></apex:selectOption>
+                <apex:selectOption itemValue="User" itemLabel="User"></apex:selectOption>                
+            </apex:selectList>
+            <apex:inputText value="{!MobilePhone}" Label="Cell Phone"/>
+            
+        <!--      <apex:inputText value="{!UserName}" Label="Username" required="true"/> -->
+        <!--      <apex:inputText value="{!OtherPhone}" Label="Other Phone"/> -->
+            <apex:inputText value="{!Fax}" Label="Fax"/> 
+            <apex:inputText value="{!Email}" Label="Email" required="true" id="Email"/>
+        <!--      <apex:inputText value="{!HomePhone}" Label="Home Phone"/> -->
+            
+               
+            <apex:inputField value="{!Contact.AccountId}" rendered="false"/>            
+         </apex:pageBlockSection>
+    </Apex:pageBlock>
+</apex:form>
+<hr style="margin-top:50px;margin-left:200px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+
+</apex:page>

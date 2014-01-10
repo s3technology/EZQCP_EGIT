@@ -1,0 +1,142 @@
+<apex:page controller="DoPaymentHandlerInvoice" showHeader="false"  cache="false" id="dpi">
+<title>Pay with Purchase Order</title>  
+    <style>
+    .pbTitle{
+    	width:310px !important;
+    }
+        .horizontalNavigationBar{
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+            font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+            margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+        }
+        #navigationBottom {margin-left:200px;}
+        .horizontalNavigationBar { width: 1090px; }
+        .horizontalNavigationBar { float: left; }  
+        .horizontalNavigationBar .module a { margin-left: 0; }  
+        .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+        .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+        .horizontalNavigationBar ul li a { display: block; }
+        .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+        #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+        .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+        .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+        .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+        hr{margin-left:200px;}
+        .footer{
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+            margin-left:200px;
+            padding-top: 35px;
+            padding-bottom: 40px;
+            color:hsl(0, 0%, 45%);
+            margin-left:280px;
+        }
+    </style>
+    
+    <apex:image value="{!$Resource.logoEZQCP}"  style="margin-left:200px;"/>
+    
+    <div id="navigationBottom">
+        <div class="horizontalNavigationBar">
+            <ul class="content-navigation">
+                <li class="module">
+                    <div>
+                        <a href="/index/index?id={!$CurrentPage.parameters.pid}">
+                            <span>Account Central</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.pid}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                            <span>Cart</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index">
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li> 
+                <li class="module">
+                    <div>
+                        <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                            <span>  Help </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <hr/>
+    <br/><br/>
+    
+    <apex:includeScript value="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"  />
+<script type="text/javascript">
+      jQuery.noConflict();
+      jQuery(document).ready(function(){
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:contact_name"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:email"]');        
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:pod"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:line1"]'); 
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:city"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:state"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:zip"]');
+         jQuery('<div style="color:#CC0000;"><span style="border-right: 3px solid #CC0000; float: left; margin-left: -4px; height: 19px;"> </span></div>').insertBefore('input[name="dpi:form:pb:pbs:country"]');
+      }); 
+</script>
+
+    <apex:form style="margin-left:200px;margin-right:200px;" id="form">
+        <apex:pageBlock title="Payment with Purchase Order Number" mode="edit" id="pb">
+            <apex:pageblockbuttons location="bottom" id="pbb">
+             <apex:commandButton value="Submit" action="{!sendMeInvoice}" id="submit"/>
+              <apex:commandButton value="Cancel" action="{!Cancel}" id="cancel"/>
+            </apex:pageblockbuttons>
+            <apex:pagemessages />
+            
+            <apex:outputText escape="false" value="{!Cart_page}" id="cp"/>
+            
+            <apex:pageBlockSection columns="2" rendered="{!NOT(isSuccess)}" id="pbs">
+            
+                <apex:pageBlockSectionItem id="pbsi1" > 
+                    <apex:outputLabel value="Amount"></apex:outputLabel>
+                    <apex:outputLabel value="${!amount}"></apex:outputLabel>
+                </apex:pageBlockSectionItem>
+                <label><b>Billing Address Details</b></label>
+
+                <apex:inputText Label="Contact Name" value="{!name}" id="contact_name"/>
+
+                <apex:inputText Label="Address Line 1" value="{!address}" id="line1"/>
+             
+                <apex:inputText Label="Email" value="{!email}"  id="email"/>
+
+                <apex:inputText Label="Address Line 2" value="{!line2}" id="line2"/>
+                           
+                 <apex:inputText Label="Purchase Order Number" value="{!pod}" id="pod"/> 
+            
+                 <apex:inputText Label="City" value="{!city}"  id="city" />
+            	 <br/>
+                 <apex:inputText Label="State/Province" value="{!state}" id="state"/>
+                 <br/>
+                 <apex:inputText Label="Zip/Postal Code" value="{!zip}" id="zip"  />
+                 <br/>
+                 <apex:inputText Label="Country" value="{!country}" id="country"  />
+           </apex:pageBlockSection>  
+      </apex:pageBlock>
+  </apex:form>
+  
+  <hr style="margin-top:20px;"/>
+
+    <div class="footer">
+        Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+    </div>
+
+</apex:page>

@@ -1,0 +1,164 @@
+<apex:page StandardController="Assessment__c" extensions="SearchController,Cart" showHeader="false" cache="false">
+<title>Order Summary - EZ-QCP</title>
+<style>
+    .horizontalNavigationBar{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif; 
+        font-size: 14px; line-height: 1.8em; font-weight: normal; margin-right: auto; 
+        margin-left: auto; background-color: #FFFFFF;margin-bottom:10px;
+    }
+    #navigationBottom {margin-left:200px;}
+    .horizontalNavigationBar { width: 1090px; }
+    .horizontalNavigationBar { float: left; }  
+    .horizontalNavigationBar .module a { margin-left: 0; }  
+    .horizontalNavigationBar ul { list-style-type: none; padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li { float: left;  padding: 0; margin: 0; }
+    .horizontalNavigationBar ul li a { display: block; }
+    .horizontalNavigationBar a{font-weight: normal; text-decoration: none; color: #8D8D8D;}
+    #navigationBottom .horizontalNavigationBar{border-bottom: 1px solid #D8D8D8; border-color: #D8D8D8;}
+    .horizontalNavigationBar .module a{padding-right: 15px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px;}
+    .horizontalNavigationBar .module a:hover{background-color: #D8D8D8; color: #121212;text-decoration:none}
+    .horizontalNavigationBar, #pageFooter { padding-left:140px; padding-right:140px; width:810px; }
+    hr{margin-left:200px;}
+    .footer{
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', Tahoma, sans-serif;
+        margin-left:200px;
+        padding-top: 35px;
+        padding-bottom: 40px;
+        color:hsl(0, 0%, 45%);
+        margin-left:280px;
+    }
+</style>
+ <apex:image value="{!$Resource.logoEZQCP}"  style="margin-left:200px;"/>
+<div id="navigationBottom">
+    <div class="horizontalNavigationBar">
+        <ul class="content-navigation">
+                <li class="module">
+                <div>
+                    <a href="/index/index?id={!$CurrentPage.parameters.pid}">
+                        <span>Account Central</span>
+                    </a>
+                </div>
+                </li>
+                <li class="module">
+                    <div>
+                        <a href="/index/resetPassword?id={!$CurrentPage.parameters.pid}">
+                            <span>Reset Password</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="module">
+                <div>
+                    <a href="/index/SandBoxCart?pid={!$CurrentPage.parameters.pid}">
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </li> 
+            <li class="module">
+                <div>
+                    <a href="/index">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+            <li class="module">
+                <div>
+                    <a href="/index/Help?pid={!$CurrentPage.parameters.id}">
+                      <span>  Help </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<br/>
+<br/><br/><br/>
+<div id="tb2" style="margin-left:500px;font-size:20px;"><b>Order Summary</b><br/><br/></div>
+<div id="tbl" style="margin-left:300px;"></div>
+<br/><br/>
+    <apex:form style="margin-left:350px;" >
+        <apex:commandButton value="Pay with Purchase Order" action="{!SendInvoice}" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<apex:commandButton value="Pay with Credit Card" action="{!payNow}"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<apex:commandButton value=" Continue Shopping " onclick="location.href='/index/locationsList?pid={!$CurrentPage.parameters.pid}'; return false;"/>
+    </apex:form>
+<hr style="margin-top:20px;"/>
+<div class="footer">
+    Copyright © 2013, CarePoint Solutions, Inc. All rights reserved. | &nbsp;<a href="http://www.carepointsolutions.com/privacy" style="color:blue;" target="_blank" >Our Privacy Policy</a>
+</div>
+<script>
+ var cart2='';
+ var totl='0';
+ function checkCookie(){
+    var cart2 = getCookie('apex__cart_{!$CurrentPage.parameters.pid}');
+    cart2=cart2.replace(/"/gi,'');
+    //alert(cart2);
+     items=cart2.split(';');
+     var str="<table width=\"700\" border=\"1\" bordercolor=\"#CCCCCC\" cellspacing=\"0\" cellpadding=\"2\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:12px; border-radius:6px;-moz-border-radius:6px;\">";
+     str=str+"<tr  style=\"background-color:#879839; \">";
+     
+     str=str+"<td style=\"height:25px;color:white\"><strong>IQCP Location / Unique Identifier</strong></td>";
+     str=str+"<td style=\"height:25px;color:white\"><strong>CLIA Number</strong></td>";
+     str=str+"<td style=\"height:25px;color:white\"><strong>Assessment</strong></td>";
+     str=str+"<td style=\"height:25px;color:white\"><strong>Price</strong></td>";
+     str=str+" <td style=\"height:25px;color:white\"><strong>Discount</strong></td>";
+     str=str+" <td style=\"height:25px;color:white\"><strong>Total</strong></td>";
+     str=str+"</tr> ";
+ 
+   for(i=0;i<items.length;i++)
+   {
+    var val=items[i];
+   if(items[i]=='')
+    {
+        continue;
+    }   
+     arr_val=val.split(',');
+     val1=arr_val[6]+','+arr_val[7];
+     var discc=parseFloat(arr_val[0])-((parseFloat(arr_val[0])*parseFloat(arr_val[2])/100));
+     totl=parseFloat(totl)+ parseFloat(discc); 
+     clia=  arr_val[9];
+     //alert(clia+'  '+arr_val[9]);
+    
+    str=str+"<tr><td>"+arr_val[5]+"</td><td>"+clia+"</td><td>"+arr_val[3]+"</td><td>$"+parseFloat(arr_val[0]).toFixed(2)+"</td><td>"+arr_val[2]+"</td><td>$"+parseFloat(discc).toFixed(2)+"</td></tr>";
+    }
+        str=str+" <tr>";
+        str=str+"<td>&nbsp;</td>";
+        str=str+"<td colspan=\"4\" align=\"right\" ><b>Total </b></td>";
+        str=str+"<td><b>$"+totl.toFixed(2)+"</b></td>";
+        str=str+"</tr>";
+        str=str+"</table>";
+        document.getElementById("tbl").innerHTML=str;
+       var username = getCookie("apex__username");        
+        if (username!=null && username!=""){
+        
+            checkTypeCookie();
+        }
+        else{
+            parent.location = "http://carepointsolutions.force.com/index";
+        }
+   }
+
+window.onload = checkCookie();
+
+    function checkTypeCookie(){
+        var customerType = getCookie("apex__customertype");
+        if (customerType == "User"){
+        }
+        else {
+            var elements= document.getElementsByClassName('hide');
+            for(var i=0;i<elements.length;i++){
+                elements[i].style.display = 'inline-block';
+        }
+      }
+    }
+   function getCookie(c_name){
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++){
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name){
+               return unescape(y);
+            }
+        }
+    } 
+  </script>
+</apex:page>
